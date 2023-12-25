@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "../client/dist/index.html"));
 });
 
-let currentURL;
+let currentURL = 'https://www.youtube.com/watch?v=lOKASgtr6kU';
 io.on("connection", (socket) => {
   console.log("user connected: " + socket.id);
   socket.emit("url", currentURL);

@@ -7,13 +7,13 @@ function App() {
   const playerRef = useRef();
   const syncButton = useRef();
   const sendSyncButton = useRef();
+  const serverTimeDiv = useRef();
 
   let LocalCurrentTime;
   let ServerCurrentTime;
 
   useEffect(() => {
     syncButton.current.addEventListener("click", () => {
-      console.log(ServerCurrentTime);
       playerRef.current.seekTo(ServerCurrentTime);
       syncButton.current.disabled = true;
       setTimeout(() => {
@@ -31,15 +31,15 @@ function App() {
       setIsPlaying(data);
     });
     socket.on("currentTime", (data) => {
+      console.log(serverTimeDiv);
+      serverTimeDiv.current.innerText = `Server Time: ${Math.floor(data)}s`;
       ServerCurrentTime = data;
       console.log(`${data} sekundy | server`);
     });
   }, []);
   const [url, setUrl] = useState("");
   // const [updatedURL, setupdatedURL] = useState(url);
-  const [updatedURL, setupdatedURL] = useState(
-    "https://www.youtube.com/watch?v=lOKASgtr6kU"
-  );
+  const [updatedURL, setupdatedURL] = useState("");
 
   const handleChange = (e) => {
     setUrl(e.target.value);
@@ -79,8 +79,11 @@ function App() {
   };
   return (
     <>
+      <div ref={serverTimeDiv}>Server Time: s</div>
       <button ref={syncButton}>Sync</button>
-      <button ref={sendSyncButton} onClick={sendCurrentTime}>Send Sync</button>
+      <button ref={sendSyncButton} onClick={sendCurrentTime}>
+        Send Sync
+      </button>
       <input type="text" onChange={handleChange} value={url} />
       <button onClick={handleClick}>Send LINK!</button>
       <p>currently playing: {updatedURL}</p>
