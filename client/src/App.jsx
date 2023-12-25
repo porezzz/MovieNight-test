@@ -4,9 +4,22 @@ import { socket } from "./socket";
 import React, { useEffect, useRef, useState } from "react";
 
 function App() {
+  const playerRef = useRef();
+  const syncButton = useRef();
+  const sendSyncButton = useRef();
+
+  let LocalCurrentTime;
+  let ServerCurrentTime;
+
   useEffect(() => {
-    
-    
+    syncButton.current.addEventListener("click", () => {
+      console.log(ServerCurrentTime);
+      playerRef.current.seekTo(ServerCurrentTime);
+      syncButton.current.disabled = true;
+      setTimeout(() => {
+        syncButton.current.disabled = false;
+      }, 5000);
+    });
     socket.on("url", (data) => {
       setupdatedURL(data);
       console.log(`recived data: ${data}`);
@@ -17,10 +30,11 @@ function App() {
     socket.on("playing", (data) => {
       setIsPlaying(data);
     });
-  
-    
+    socket.on("currentTime", (data) => {
+      ServerCurrentTime = data;
+      console.log(`${data} sekundy | server`);
+    });
   }, []);
-  
   const [url, setUrl] = useState("");
   // const [updatedURL, setupdatedURL] = useState(url);
   const [updatedURL, setupdatedURL] = useState(
@@ -32,11 +46,11 @@ function App() {
   };
 
   const handleClick = () => {
-    if(ReactPlayer.canPlay(url)){
+    if (ReactPlayer.canPlay(url)) {
       setupdatedURL(url);
       socket.emit("url", url);
     } else {
-      console.log('There was an error with link')
+      console.log("There was an error with link");
     }
   };
 
@@ -50,12 +64,23 @@ function App() {
     setIsPlaying(true);
     socket.emit("playing", true);
   };
-  
-  const playerRef = useRef();
 
+  const currentTimeInterval = (currentTime) => {
+    LocalCurrentTime = currentTime.playedSeconds;
+    console.log(LocalCurrentTime);
+  };
+  const sendCurrentTime = () => {
+    console.log(LocalCurrentTime);
+    socket.emit("currentTime", LocalCurrentTime);
+    sendSyncButton.current.disabled = true;
+    setTimeout(() => {
+      sendSyncButton.current.disabled = false;
+    }, 5000);
+  };
   return (
     <>
-      <button>Sync</button>
+      <button ref={syncButton}>Sync</button>
+      <button ref={sendSyncButton} onClick={sendCurrentTime}>Send Sync</button>
       <input type="text" onChange={handleChange} value={url} />
       <button onClick={handleClick}>Send LINK!</button>
       <p>currently playing: {updatedURL}</p>
@@ -68,6 +93,7 @@ function App() {
         onPause={pause}
         onPlay={play}
         light={true}
+        onProgress={currentTimeInterval}
       />
     </>
   );

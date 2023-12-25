@@ -16,10 +16,9 @@ app.get("/", (req, res) => {
 });
 
 let currentURL;
-
 io.on("connection", (socket) => {
   console.log("user connected: " + socket.id);
-  socket.emit('url', currentURL)
+  socket.emit("url", currentURL);
   socket.on("disconnect", () => {
     console.log("user disconnected: " + socket.id);
   });
@@ -31,6 +30,10 @@ io.on("connection", (socket) => {
   socket.on("playing", (data) => {
     console.log(`playing changed ${socket.id}: ${data}`);
     io.emit("playing", data);
+  });
+  socket.on("currentTime", (data) => {
+    console.log(`${socket.id} wysyła czas: ${data} sekund filmu`)
+    io.emit("currentTime", data);
   });
 });
 
