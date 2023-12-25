@@ -8,37 +8,34 @@ function App() {
   const sendSyncButton = useRef();
   const serverTimeDiv = useRef();
 
+  const connectedUsers = useRef();
+
   let LocalCurrentTime;
   let ServerCurrentTime;
 
   useEffect(() => {
-    // syncButton.current.addEventListener("click", () => {
-    //   
-    //   syncButton.current.disabled = true;
-    //   setTimeout(() => {
-    //     syncButton.current.disabled = false;
-    //   }, 5000);
-    // });
     socket.on("url", (data) => {
       setupdatedURL(data);
-      console.log(`recived data: ${data}`);
+      console.log(`recived url data from server: ${data}`);
     });
     socket.on("connect", () => {
-      console.log("CONNECTED");
+      console.log("Connected to the server");
     });
     socket.on("playing", (data) => {
       setIsPlaying(data);
     });
-    socket.on("currentTime", (data) => {
-      console.log(serverTimeDiv);
-      serverTimeDiv.current.innerText = `Server Time: ${Math.floor(data)}s`;
-      console.log(`${data} sekundy | server`);
+    socket.on("currentTime", (data, user) => {
+      serverTimeDiv.current.innerText = `Server synced to: ${user}`;
+      console.log(`recived timeData from server: ${data}s`);
       ServerCurrentTime = data;
       playerRef.current.seekTo(ServerCurrentTime);
     });
+    socket.on("connectedUsersTab", (data) => {
+      console.log(data);
+      connectedUsers.current.innerText = data.join(", ")
+    });
   }, []);
   const [url, setUrl] = useState("");
-  // const [updatedURL, setupdatedURL] = useState(url);
   const [updatedURL, setupdatedURL] = useState("");
 
   const handleChange = (e) => {
@@ -67,10 +64,8 @@ function App() {
 
   const currentTimeInterval = (currentTime) => {
     LocalCurrentTime = currentTime.playedSeconds;
-    console.log(LocalCurrentTime);
   };
   const sendCurrentTime = () => {
-    console.log(LocalCurrentTime);
     socket.emit("currentTime", LocalCurrentTime);
     sendSyncButton.current.disabled = true;
     setTimeout(() => {
@@ -97,6 +92,7 @@ function App() {
         light={true}
         onProgress={currentTimeInterval}
       />
+      <div ref={connectedUsers}></div>
     </>
   );
 }

@@ -15,11 +15,21 @@ app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "../client/dist/index.html"));
 });
 
+const connectedUsers = []
+
 let currentURL = 'https://www.youtube.com/watch?v=lOKASgtr6kU';
 io.on("connection", (socket) => {
+
+  connectedUsers.push(socket.id)
+  io.emit("connectedUsersTab", connectedUsers)
+
   console.log("user connected: " + socket.id);
   socket.emit("url", currentURL);
   socket.on("disconnect", () => {
+
+    connectedUsers.pop(socket.id, 1)
+    io.emit("connectedUsersTab", connectedUsers)
+
     console.log("user disconnected: " + socket.id);
   });
   socket.on("url", (data) => {
@@ -33,7 +43,7 @@ io.on("connection", (socket) => {
   });
   socket.on("currentTime", (data) => {
     console.log(`${socket.id} wysyła czas: ${data} sekund filmu`)
-    io.emit("currentTime", data);
+    io.emit("currentTime", data, socket.id);
   });
 });
 
