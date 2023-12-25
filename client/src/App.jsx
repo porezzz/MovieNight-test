@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react";
 
 function App() {
   const playerRef = useRef();
-  const syncButton = useRef();
   const sendSyncButton = useRef();
   const serverTimeDiv = useRef();
 
@@ -13,13 +12,13 @@ function App() {
   let ServerCurrentTime;
 
   useEffect(() => {
-    syncButton.current.addEventListener("click", () => {
-      playerRef.current.seekTo(ServerCurrentTime);
-      syncButton.current.disabled = true;
-      setTimeout(() => {
-        syncButton.current.disabled = false;
-      }, 5000);
-    });
+    // syncButton.current.addEventListener("click", () => {
+    //   
+    //   syncButton.current.disabled = true;
+    //   setTimeout(() => {
+    //     syncButton.current.disabled = false;
+    //   }, 5000);
+    // });
     socket.on("url", (data) => {
       setupdatedURL(data);
       console.log(`recived data: ${data}`);
@@ -33,8 +32,9 @@ function App() {
     socket.on("currentTime", (data) => {
       console.log(serverTimeDiv);
       serverTimeDiv.current.innerText = `Server Time: ${Math.floor(data)}s`;
-      ServerCurrentTime = data;
       console.log(`${data} sekundy | server`);
+      ServerCurrentTime = data;
+      playerRef.current.seekTo(ServerCurrentTime);
     });
   }, []);
   const [url, setUrl] = useState("");
@@ -80,7 +80,6 @@ function App() {
   return (
     <>
       <div ref={serverTimeDiv}>Server Time: s</div>
-      <button ref={syncButton}>Sync</button>
       <button ref={sendSyncButton} onClick={sendCurrentTime}>
         Send Sync
       </button>
