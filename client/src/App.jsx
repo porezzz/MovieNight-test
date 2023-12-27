@@ -1,6 +1,6 @@
 import classes from "./App.module.css";
-import Chat from "./components/Chat/Chat";
 import Playlist from "./components/Playlist/Playlist";
+import Popup from "./components/Popup/Popup";
 import UserInfo from "./components/UserInfo/UserInfo";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer";
 import VideoPlayerControls from "./components/VideoPlayerControls/VideoPlayerControls";

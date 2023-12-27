@@ -1,0 +1,38 @@
+.titleOk{
+    color: green;
+    font-size: 1.5rem;
+}
+.desc{
+    color: var(--semiWhite);
+    font-size: 0.9rem;
+    margin-top: -15px;
+}
+.titleNoOk{
+    color: red;
+    font-size: 1.5rem;
+}
+.cont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--semiDark);
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 80px;
+}
+.contOk{
+    border: 1px green solid;
+}
+.contNoOk{
+    border: 1px red solid;
+}
+.fadeOut{
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
+}
