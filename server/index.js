@@ -36,7 +36,6 @@ io.on("connection", (socket) => {
 
   console.log(`${socket.id} connected`);
   console.log(`online list: ${OnlineTab}`);
-  console.log(socket.username);
 
   socket.on("disconnect", () => {
     OnlineTab.pop(socket.id, 1);
@@ -58,12 +57,11 @@ io.on("connection", (socket) => {
     Queue.push(vidData);
 
     io.emit("playlist", JSON.stringify(Queue));
-    console.log(`sending whole queue ${Queue} to 'playlist'`);
+    console.log(`sending whole queue ${JSON.stringify(Queue)} to 'playlist'`);
 
     io.emit("url", Queue[0].url);
     io.emit("king", Queue[0].sender);
 
-    console.log(Queue);
     console.log(`${socket.id} sent new url ${data}`);
   });
   let recentlyDeleted;
