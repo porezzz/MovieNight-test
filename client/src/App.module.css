@@ -1,0 +1,20 @@
+.AppContainer{
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100svw;
+    height: 100svh;
+
+}
+.VideoPlayerContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px red solid;
+}
+.ControlsContainer{
+    border: 1px red solid;
+}

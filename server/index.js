@@ -15,35 +15,38 @@ app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "../client/dist/index.html"));
 });
 
-const connectedUsers = []
-
-let currentURL = 'https://www.youtube.com/watch?v=lOKASgtr6kU';
+let currentURL = "https://www.youtube.com/watch?v=lOKASgtr6kU";
+let currentKing;
 io.on("connection", (socket) => {
-
-  connectedUsers.push(socket.id)
-  io.emit("connectedUsersTab", connectedUsers)
-
   console.log("user connected: " + socket.id);
+  
   socket.emit("url", currentURL);
-  socket.on("disconnect", () => {
+  socket.emit("id", socket.id)
 
-    connectedUsers.pop(socket.id, 1)
-    io.emit("connectedUsersTab", connectedUsers)
+
+  socket.on("disconnect", () => {
 
     console.log("user disconnected: " + socket.id);
   });
+
   socket.on("url", (data) => {
-    console.log(`url from ${socket.id}: ${data}`);
+    console.log(`new URL ${data}, ${socket.id}`);
     currentURL = data;
+    currentKing = socket.id
     io.emit("url", data);
+    io.emit("king", currentKing)
   });
+
   socket.on("playing", (data) => {
     console.log(`playing changed ${socket.id}: ${data}`);
     io.emit("playing", data);
   });
-  socket.on("currentTime", (data) => {
-    console.log(`${socket.id} wysyła czas: ${data} sekund filmu`)
-    io.emit("currentTime", data, socket.id);
+
+  socket.on("time", (data) => {
+    if(socket.id == currentKing){
+      console.log(data, socket.id);
+      io.emit("time", data)
+    }
   });
 });
 
