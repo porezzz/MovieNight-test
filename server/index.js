@@ -66,16 +66,20 @@ io.on("connection", (socket) => {
     console.log(Queue);
     console.log(`${socket.id} sent new url ${data}`);
   });
-
+  let recentlyDeleted;
   socket.on("urlEnd", (data) => {
-    console.log(`user said ${data} ended`);
-    Queue.splice(0, 1);
-    if (Queue.length !== 0) {
+    console.log(`${socket.id} user said ${data} ended`);
+    recentlyDeleted = data
+    Queue.shift();
+    if(recentlyDeleted !== data){
+      Queue.shift();
+    }
+    if (Queue.length == 0) {
+      io.emit("url", null);
+    } else {
       io.emit("url", Queue[0].url);
       io.emit("king", Queue[0].sender);
       console.log(`now playing ${Queue[0].url} from ${Queue[0].sender}`);
-    } else {
-      io.emit("url", null);
     }
     io.emit("playlist", JSON.stringify(Queue));
     console.log(`sending whole queue ${Queue} to 'playlist'`);

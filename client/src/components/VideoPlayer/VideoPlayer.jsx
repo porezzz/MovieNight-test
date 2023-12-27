@@ -45,7 +45,7 @@ const VideoPlayer = () => {
     setTimeout(() => {
       socket.emit("urlEnd", updatedURL);
       socket.emit("time", 0);
-    }, 2000);
+    }, 300);
   };
   return (
     <ReactPlayer
