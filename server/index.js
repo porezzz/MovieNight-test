@@ -23,7 +23,7 @@ const Queue = [];
 
 io.on("connection", (socket) => {
   if(Queue.length == 0){
-    socket.emit("url", currentURL);
+    socket.emit("url", null);
   } else {
     socket.emit("url", Queue[0].url)
   }
