@@ -22,7 +22,11 @@ const OnlineTab = [];
 const Queue = [];
 
 io.on("connection", (socket) => {
-  socket.emit("url", currentURL);
+  if(Queue.length == 0){
+    socket.emit("url", currentURL);
+  } else {
+    socket.emit("url", Queue[0].url)
+  }
   socket.emit("id", socket.id);
   socket.emit("king", currentKing);
 
