@@ -21,7 +21,7 @@ const VideoPlayer = () => {
       console.log(id)
     })
     socket.on("time", data => {
-      player.current.seekTo(data)
+      player.current.seekTo(data, "fraction")
     })
   }, []);
 
