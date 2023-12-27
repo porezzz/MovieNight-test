@@ -1,0 +1,31 @@
+.inputContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100px;
+}
+.VideoPlayerControlsText{
+    padding: 7px;
+    border-radius: 5px;
+    font-size: 1.05rem;
+    border: none;
+    height: 30px;
+    width: 300px;
+}
+.VideoPlayerControlsText:focus{
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--semiWhite);
+}
+.VideoPlayerControlsButton{
+    height: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    box-sizing: border-box !important;
+    background-color: var(--semiDark);
+    cursor: pointer;
+    width: 100px;
+    border-radius: 10px;
+}
+.VideoPlayerControlsButton:hover{
+    box-shadow: inset 0 0 0 2px var(--semiWhite);
+}

@@ -24,7 +24,6 @@ const VideoPlayer = () => {
     socket.on("time", data => {
       if(Math.floor(player.current.getCurrentTime()) != Math.floor(data)){
         player.current.seekTo(data, "seconds")
-
       }
     })
   }, []);
@@ -41,7 +40,7 @@ const VideoPlayer = () => {
   // PLACEHOLDER CHANGE BEFORE UPLOADING !!!!
   const placeHolderURL = 'https://www.youtube.com/watch?v=KdOCYsRM9mw'
 
-  const [updatedURL, setupdatedURL] = useState(placeHolderURL);
+  const [updatedURL, setupdatedURL] = useState(placeHolderURL || null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentKing, setCurrentKing] = useState();
 
@@ -59,7 +58,8 @@ const VideoPlayer = () => {
       onPlay={play}
       
       // progressInterval={1000}
-
+      width={'100%'}
+      height={'100%'}
       muted={false}
       controls={true}
       light={true}

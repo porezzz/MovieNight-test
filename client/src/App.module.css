@@ -4,6 +4,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    /* flex-direction: column; */
     width: 100svw;
     height: 100svh;
 
@@ -13,8 +15,30 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    border: 1px red solid;
+    /* 16:9 ratio */
+    width: var(--centerWidth);
+    height: var(--centerHeight);
+
+    padding: 7px;
+    border-radius: 10px;
+    background: var(--gradientDefault);
+}
+.GradientModule{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
 }
 .ControlsContainer{
-    border: 1px red solid;
+    padding: 5px;
+    background: var(--dark);
+    border-radius: 10px;
+    margin: 5px;
+    margin-top: 10px;
+    width: var(--centerWidth);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

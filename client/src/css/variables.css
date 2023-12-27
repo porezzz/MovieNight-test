@@ -1,0 +1,15 @@
+:root{
+    --dark:  #141414; 
+    --semiDark: #242424;
+    --white: #F1F2EB;
+    --semiWhite: #D8DAD3;
+    --red: #A4C2A5;
+    --blue: #256EFF;
+
+    --centerWidth: 1280px;
+    --centerHeight: 720px;
+
+    --gradientDefault: linear-gradient(var(--semiDark) 0%, var(--dark)  100%);
+    --gradientDefaultReverse: linear-gradient(var(--dark) 0%, var(--semiDark)  100%);
+    --gradientLight: linear-gradient(var(--dark) 0%, var(--dark) 100%);
+}

@@ -17,16 +17,26 @@ app.get("/", (req, res) => {
 
 let currentURL = "https://www.youtube.com/watch?v=lOKASgtr6kU";
 let currentKing;
+
+const OnlineTab = []
+
 io.on("connection", (socket) => {
   console.log("user connected: " + socket.id);
   
   socket.emit("url", currentURL);
   socket.emit("id", socket.id)
+  socket.emit("king", currentKing)
+  
+  OnlineTab.push(socket.id);
+  console.log(OnlineTab)
 
+  io.emit("OnlineTab", OnlineTab)
 
   socket.on("disconnect", () => {
-
+    OnlineTab.pop(socket.id, 1)
     console.log("user disconnected: " + socket.id);
+    console.log(OnlineTab)
+    io.emit("OnlineTab", OnlineTab)
   });
 
   socket.on("url", (data) => {

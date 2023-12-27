@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { socket } from "../../socket";
 import ReactPlayer from "react-player";
-
+import classes from './VideoPlayerControls.module.css'
 const VideoPlayerControls = () => {
   useEffect(() => {
     socket.on("connect", () => {
@@ -19,10 +19,12 @@ const VideoPlayerControls = () => {
       console.log("There was an error with link");
     }
   };
+  let CurrentVideoHost = 'huj'
+  let OnlineNum = 'huj'
   return (
-    <div>
-      <input type="text" onChange={handleChange} value={url} />
-      <button onClick={handleClick}>Send LINK!</button>
+    <div className={classes.inputContainer}>
+      <input type="text" onChange={handleChange} value={url} className={`${classes.VideoPlayerControlsText}`}/>
+      <button onClick={handleClick} className={`${classes.VideoPlayerControlsButton}`}>Send LINK!</button>
     </div>
   );
 };
