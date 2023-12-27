@@ -4,30 +4,27 @@ import { socket } from "../../socket";
 const VideoPlayer = () => {
   let id;
 
-  const player = useRef()
+  const player = useRef();
   useEffect(() => {
     socket.on("url", (data) => {
       setupdatedURL(data);
-      console.log(`recived url data from server: ${data}`);
     });
     socket.on("playing", (data) => {
       setIsPlaying(data);
     });
-    socket.on("king", data => {
-      setCurrentKing(data)
-      console.log('current king ' + data)
-    })
-    socket.on("id", data => {
+    socket.on("king", (data) => {
+      setCurrentKing(data);
+    });
+    socket.on("id", (data) => {
       id = data;
-      console.log(id)
-    })
-    socket.on("time", data => {
-      if(Math.floor(player.current.getCurrentTime()) != Math.floor(data)){
-        player.current.seekTo(data, "seconds")
+      console.log(`Your id is ${data}`);
+    });
+    socket.on("time", (data) => {
+      if (Math.floor(player.current.getCurrentTime()) != Math.floor(data)) {
+        player.current.seekTo(data, "seconds");
       }
-    })
+    });
   }, []);
-
 
   const pause = () => {
     setIsPlaying(false);
@@ -37,34 +34,33 @@ const VideoPlayer = () => {
     setIsPlaying(true);
     socket.emit("playing", true);
   };
-  // PLACEHOLDER CHANGE BEFORE UPLOADING !!!!
-  const placeHolderURL = 'https://www.youtube.com/watch?v=KdOCYsRM9mw'
-
-  const [updatedURL, setupdatedURL] = useState(placeHolderURL || null);
+  const [updatedURL, setupdatedURL] = useState();
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentKing, setCurrentKing] = useState();
 
   const callback = (data) => {
-    socket.emit("time", data.playedSeconds)
-  }
+    socket.emit("time", data.playedSeconds);
+  };
+  const emitEnd = () => {
+    setTimeout(() => {
+      socket.emit("urlEnd", updatedURL);
+      socket.emit("time", 0);
+    }, 2000);
+  };
   return (
     <ReactPlayer
       ref={player}
-
       url={updatedURL}
       playing={isPlaying}
-
       onPause={pause}
       onPlay={play}
-      
-      // progressInterval={1000}
-      width={'100%'}
-      height={'100%'}
+      width={"100%"}
+      height={"100%"}
       muted={false}
       controls={true}
-      light={true}
-
+      light={false}
       onProgress={callback}
+      onEnded={emitEnd}
     />
   );
 };

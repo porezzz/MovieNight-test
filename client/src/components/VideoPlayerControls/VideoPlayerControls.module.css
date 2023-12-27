@@ -10,7 +10,7 @@
     font-size: 1.05rem;
     border: none;
     height: 30px;
-    width: 300px;
+    width: 350px;
 }
 .VideoPlayerControlsText:focus{
     outline: none;

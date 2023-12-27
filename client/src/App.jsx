@@ -7,9 +7,6 @@ import VideoPlayerControls from "./components/VideoPlayerControls/VideoPlayerCon
 function App() {
   return (
     <div className={classes.AppContainer}>
-      <div className={classes.LeftWrapper}>
-        <Playlist />
-      </div>
       <div className={classes.CenterWrapper}>
         <div className={classes.VideoPlayerContainer}>
           <div className={classes.GradientModule}>
@@ -25,8 +22,11 @@ function App() {
         </div>
       </div>
       <div className={classes.RightWrapper}>
-        <Chat />
+        <Playlist />
       </div>
+      {/* <div className={classes.RightWrapper}>
+        <Chat />
+      </div> */}
     </div>
   );
 }

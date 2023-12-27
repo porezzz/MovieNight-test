@@ -1,6 +1,19 @@
 .SidePanel{
-    border: 1px red solid;
-
-    height: 89svh;
+    /* border: 1px red solid; */
+    background: var(--dark);
+    height: 95.5svh;
+    border-radius: 10px;
+    margin-left: 5px;
+    padding: 5px;
     width: 15svw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.catalogue{
+    background-color: var(--semiDark);
+    height: 90%;
+    width: 100%;
+    border-radius: 5px;
 }
