@@ -17,6 +17,7 @@ app.get("/", (req, res) => {
 
 let currentURL = "";
 let currentKing = "";
+let recentlyDeleted;
 
 const OnlineTab = [];
 const Queue = [];
@@ -64,13 +65,11 @@ io.on("connection", (socket) => {
 
     console.log(`${socket.id} sent new url ${data}`);
   });
-  let recentlyDeleted;
   socket.on("urlEnd", (data) => {
     console.log(`${socket.id} user said ${data} ended`);
-    recentlyDeleted = data
-    Queue.shift();
     if(recentlyDeleted !== data){
       Queue.shift();
+      recentlyDeleted = data
     }
     if (Queue.length == 0) {
       io.emit("url", null);
