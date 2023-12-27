@@ -42,7 +42,7 @@ const VideoPlayer = () => {
   const [currentKing, setCurrentKing] = useState();
 
   const callback = (data) => {
-    socket.emit("time", data.playedSeconds)
+    socket.emit("time", data)
   }
   return (
     <ReactPlayer
