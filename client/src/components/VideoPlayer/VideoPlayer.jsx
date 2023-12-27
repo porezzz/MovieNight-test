@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import { socket } from "../../socket";
 const VideoPlayer = () => {
   let id;
+
   const player = useRef()
   useEffect(() => {
     socket.on("url", (data) => {
@@ -21,7 +22,10 @@ const VideoPlayer = () => {
       console.log(id)
     })
     socket.on("time", data => {
-      player.current.seekTo(data, "fraction")
+      if(Math.floor(player.current.getCurrentTime()) != Math.floor(data)){
+        player.current.seekTo(data, "seconds")
+
+      }
     })
   }, []);
 
@@ -42,7 +46,7 @@ const VideoPlayer = () => {
   const [currentKing, setCurrentKing] = useState();
 
   const callback = (data) => {
-    socket.emit("time", data)
+    socket.emit("time", data.playedSeconds)
   }
   return (
     <ReactPlayer
@@ -54,6 +58,8 @@ const VideoPlayer = () => {
       onPause={pause}
       onPlay={play}
       
+      // progressInterval={1000}
+
       muted={false}
       controls={true}
       light={true}

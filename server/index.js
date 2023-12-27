@@ -46,6 +46,7 @@ io.on("connection", (socket) => {
     if(socket.id == currentKing){
       console.log(data, socket.id);
       io.emit("time", data)
+      
     }
   });
 });
