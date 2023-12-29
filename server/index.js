@@ -83,7 +83,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("playing", (data) => {
-    io.emit("playing", data);
+    socket.broadcast.emit("playing", data)
 
     console.log(`${socket.id} played video ${data}`);
   });
