@@ -13,7 +13,6 @@ const VideoPlayerControls = () => {
   const handleChange = (e) => {
     setUrl(e.target.value);
   };
-
   
   const handleClick = () => {
     if (ReactPlayer.canPlay(url)) {

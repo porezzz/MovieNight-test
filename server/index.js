@@ -90,8 +90,8 @@ io.on("connection", (socket) => {
 
   socket.on("time", (data) => {
     if (socket.id == currentKing) {
-      io.emit("time", data);
-
+      socket.broadcast.emit("time", data);
+      
       console.log(`host time is ${Math.floor(data)}`);
     }
   });
