@@ -15,12 +15,10 @@ const Playlist = () => {
           const element = dataJSON[i];
           const elementUrl = element.url;
           console.log(elementUrl);
-          
+          const div = document.createElement("div");
+          div.textContent = elementUrl;
 
-          const div = document.createElement('div')
-          div.textContent = elementUrl
-          playlistCont.current.appendChild(div)
-
+          playlistCont.current.appendChild(div);
         }
       }
     });

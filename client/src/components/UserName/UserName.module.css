@@ -1,0 +1,35 @@
+.container{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 100vw;
+    height: 100vh;
+    background: var(--semiDark);
+
+    font-size: 3rem;
+}
+.container input{
+    width: 20%;
+    height: 30px;
+    padding: 3px;
+    font-size: 1.2rem;
+    margin: 25px;
+}
+.container button{
+    border: 2px var(--dark) solid;
+    padding: 5px;
+    width: 170px;
+    height: 60px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.3rem;
+}
+.container button:hover{
+    background: var(--dark);
+}

@@ -8,7 +8,7 @@
     /* flex-direction: column; */
     width: 100svw;
     height: 100svh;
-
+    overflow: hidden;
 }
 .VideoPlayerContainer{
     display: flex;

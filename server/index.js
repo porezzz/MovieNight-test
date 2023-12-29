@@ -95,6 +95,11 @@ io.on("connection", (socket) => {
       console.log(`host time is ${Math.floor(data)}`);
     }
   });
+
+  socket.on("username", data => {
+    socket.id = data
+    console.log(data, socket.id)
+  })
 });
 
 server.listen(PORT, () => {
