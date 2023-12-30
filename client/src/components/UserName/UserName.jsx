@@ -36,7 +36,7 @@ const UserName = () => {
     return (
     <div className={classes.container} ref={container}>
         <label htmlFor="username">Enter your username:</label>
-        <input type="text" name="username" ref={textinput} value={name} onChange={handleChange}/>
+        <input type="text" name="username" ref={textinput} value={name} onChange={handleChange} autoComplete='off'/>
         <button onClick={handleClick}>Submit</button>
     </div>
   )

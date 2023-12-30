@@ -6,36 +6,36 @@ import Popup from "../Popup/Popup";
 const VideoPlayerControls = () => {
   useEffect(() => {
     socket.on("connect", () => {
-      Popup('Success', 'You Successfuly connected to the server', 'ok');
+      Popup("Success", "You Successfuly connected to the server", "ok");
     });
-    window.addEventListener('keypress', e => {
-      if(e.key == 'Enter' && textinput.current.value){
+    window.addEventListener("keypress", (e) => {
+      if (e.key == "Enter" && textinput.current.value) {
         if (ReactPlayer.canPlay(textinput.current.value)) {
           socket.emit("url", textinput.current.value);
           setUrl("");
         } else {
-          Popup('Error', 'There was an error with your link', 'nook');
-          setUrl("")
+          Popup("Error", "There was an error with your link", "nook");
+          setUrl("");
         }
       }
-    })
+    });
   }, []);
   const [url, setUrl] = useState("");
   const handleChange = (e) => {
     setUrl(e.target.value);
   };
-  
+
   const handleClick = () => {
     if (ReactPlayer.canPlay(url)) {
       socket.emit("url", url);
       setUrl("");
     } else {
-      Popup('Error', 'There was an error with your link', 'nook');
-      setUrl("")
+      Popup("Error", "There was an error with your link", "nook");
+      setUrl("");
     }
   };
 
-  const textinput = useRef()
+  const textinput = useRef();
 
   return (
     <div className={classes.inputContainer}>
@@ -44,6 +44,7 @@ const VideoPlayerControls = () => {
         onChange={handleChange}
         value={url}
         ref={textinput}
+        placeholder="Enter URL"
         className={`${classes.VideoPlayerControlsText}`}
       />
       <button

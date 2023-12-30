@@ -3,7 +3,6 @@ import classes from './Popup.module.css'
 
 
 const Popup = (title, description, status) => {
-    console.log(title, description, status)
     const div = document.createElement('div')
     div.classList.add(classes.cont)
     const h1 = document.createElement('h1')

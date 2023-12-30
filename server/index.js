@@ -23,6 +23,7 @@ const OnlineTab = [];
 const Queue = [];
 
 io.on("connection", (socket) => {
+  console.log(socket)
   if(Queue.length == 0){
     socket.emit("url", null);
   } else {
@@ -98,7 +99,6 @@ io.on("connection", (socket) => {
 
   socket.on("username", data => {
     socket.id = data
-    console.log(data, socket.id)
   })
 });
 

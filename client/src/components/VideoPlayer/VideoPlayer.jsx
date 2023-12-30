@@ -17,11 +17,10 @@ const VideoPlayer = () => {
     });
     socket.on("id", (data) => {
       id = data;
-      console.log(`Your id is ${data}`);
     });
     socket.on("time", (data) => {
       if (Math.floor(player.current.getCurrentTime()) != Math.floor(data)) {
-        player.current.seekTo(data, "seconds");
+        player.current.seekTo(Math.floor(data), "seconds");
       }
     });
   }, []);
@@ -58,7 +57,7 @@ const VideoPlayer = () => {
       height={"100%"}
       muted={false}
       controls={true}
-      light={false}
+      light={true}
       onProgress={callback}
       onEnded={emitEnd}
     />
