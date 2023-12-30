@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { socket } from "../../socket";
 import ReactPlayer from "react-player";
 import classes from "./VideoPlayerControls.module.css";
@@ -8,6 +8,17 @@ const VideoPlayerControls = () => {
     socket.on("connect", () => {
       Popup('Success', 'You Successfuly connected to the server', 'ok');
     });
+    window.addEventListener('keypress', e => {
+      if(e.key == 'Enter' && textinput.current.value){
+        if (ReactPlayer.canPlay(textinput.current.value)) {
+          socket.emit("url", textinput.current.value);
+          setUrl("");
+        } else {
+          Popup('Error', 'There was an error with your link', 'nook');
+          setUrl("")
+        }
+      }
+    })
   }, []);
   const [url, setUrl] = useState("");
   const handleChange = (e) => {
@@ -20,14 +31,19 @@ const VideoPlayerControls = () => {
       setUrl("");
     } else {
       Popup('Error', 'There was an error with your link', 'nook');
+      setUrl("")
     }
   };
+
+  const textinput = useRef()
+
   return (
     <div className={classes.inputContainer}>
       <input
         type="text"
         onChange={handleChange}
         value={url}
+        ref={textinput}
         className={`${classes.VideoPlayerControlsText}`}
       />
       <button
